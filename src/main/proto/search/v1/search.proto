@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+package search.v1;
+
+option java_multiple_files = true;
+option java_package = "search.v1";
+option java_outer_classname = "SearchApi";
+
+enum EntityType {
+  ENTITY_TYPE_UNSPECIFIED = 0;
+  TRACK = 1;
+  ARTIST = 2;
+  PLAYLIST = 3;
+}
+
+message SearchRequest {
+  // Текст запроса: "metallica sandman"
+  string query = 1;
+
+  // Если пусто — ищем по всем типам
+  repeated EntityType types = 2;
+
+  // Сколько результатов вернуть (сервер будет ограничивать, например до 50)
+  int32 size = 3;
+
+  // На будущее (позже сделаем search_after). Для MVP можно игнорировать.
+  string page_token = 4;
+}
+
+message SearchResult {
+  EntityType type = 1;
+  string id = 2;
+
+  // Заголовок результата: track title / artist name / playlist title
+  string title = 3;
+
+  // Подзаголовок: artistName / description / ownerName
+  string subtitle = 4;
+
+  // Elasticsearch _score
+  float score = 5;
+}
+
+message SearchResponse {
+  repeated SearchResult results = 1;
+  string next_page_token = 2;
+}
+
+service SearchService {
+  rpc Search(SearchRequest) returns (SearchResponse);
+}
