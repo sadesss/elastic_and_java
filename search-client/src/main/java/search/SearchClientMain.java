@@ -1,4 +1,4 @@
-package search.client;
+package search;
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
@@ -19,6 +19,25 @@ public class SearchClientMain {
     // 3: host (например "localhost") - optional
     // 4: port (например 9090) - optional
     public static void main(String[] args) throws Exception {
+
+        if (args.length >= 2 && "import-artists".equalsIgnoreCase(args[0])) {
+            // args: import-artists <file> [host] [port]
+            String file = args[1];
+            String host = args.length > 2 ? args[2] : "localhost";
+            int port = args.length > 3 ? Integer.parseInt(args[3]) : 9090;
+            ImportXmlCommand.importArtists(file, host, port);
+            return;
+        }
+
+        if (args.length >= 2 && "import-tracks".equalsIgnoreCase(args[0])) {
+            // args: import-tracks <file> [host] [port]
+            String file = args[1];
+            String host = args.length > 2 ? args[2] : "localhost";
+            int port = args.length > 3 ? Integer.parseInt(args[3]) : 9090;
+            ImportXmlCommand.importTracks(file, host, port);
+            return;
+        }
+
         String query = args.length > 0 ? args[0] : "metallica";
         int size = args.length > 1 ? parseIntOrDefault(args[1], 10) : 10;
         String typesArg = args.length > 2 ? args[2] : "";

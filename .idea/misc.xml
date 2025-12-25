@@ -5,6 +5,9 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/search-client/pom.xml" />
+        <option value="$PROJECT_DIR$/search-api/pom.xml" />
+        <option value="$PROJECT_DIR$/search-services/pom.xml" />
       </list>
     </option>
   </component>

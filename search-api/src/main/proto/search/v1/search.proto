@@ -6,6 +6,21 @@ option java_multiple_files = true;
 option java_package = "search.v1";
 option java_outer_classname = "SearchApi";
 
+// -------------------- SERVICE --------------------
+
+service SearchService {
+  // Search across entities (tracks, artists, playlists)
+  rpc Search(SearchRequest) returns (SearchResponse);
+
+  // Upsert single entity (index or update by id)
+  rpc Upsert(UpsertRequest) returns (UpsertResponse);
+
+  // Upsert many entities in one call (bulk)
+  rpc BulkUpsert(BulkUpsertRequest) returns (BulkUpsertResponse);
+}
+
+// -------------------- SEARCH API --------------------
+
 enum EntityType {
   ENTITY_TYPE_UNSPECIFIED = 0;
   TRACK = 1;
@@ -14,38 +29,111 @@ enum EntityType {
 }
 
 message SearchRequest {
-  // Текст запроса: "metallica sandman"
-  string query = 1;
+  string query = 1;                 // user query text
+  repeated EntityType types = 2;    // empty => all types
+  int32 size = 3;                   // number of results (recommended 1..100)
+  string page_token = 4;            // optional for future pagination
+}
 
-  // Если пусто — ищем по всем типам
-  repeated EntityType types = 2;
-
-  // Сколько результатов вернуть (сервер будет ограничивать, например до 50)
-  int32 size = 3;
-
-  // На будущее (позже сделаем search_after). Для MVP можно игнорировать.
-  string page_token = 4;
+message SearchResponse {
+  repeated SearchResult results = 1;
+  string next_page_token = 2;       // optional for future pagination
 }
 
 message SearchResult {
   EntityType type = 1;
   string id = 2;
-
-  // Заголовок результата: track title / artist name / playlist title
   string title = 3;
-
-  // Подзаголовок: artistName / description / ownerName
   string subtitle = 4;
-
-  // Elasticsearch _score
   float score = 5;
 }
 
-message SearchResponse {
-  repeated SearchResult results = 1;
-  string next_page_token = 2;
+// -------------------- DOMAIN ENTITIES --------------------
+
+message Track {
+  string id = 1;
+
+  string title = 2;
+  string artist_id = 3;
+  string artist_name = 4;
+  string album_title = 5;
+
+  repeated string tags = 6;
+  string genre = 7;
+
+  int32 year = 8;
+  int32 duration_sec = 9;
+
+  int32 popularity = 10;
+  string created_at = 11; // ISO-8601 string, e.g. "2024-01-10T10:00:00Z"
 }
 
-service SearchService {
-  rpc Search(SearchRequest) returns (SearchResponse);
+message Artist {
+  string id = 1;
+
+  string name = 2;
+  string country = 3;
+
+  repeated string tags = 4;
+
+  int32 popularity = 5;
+  string created_at = 6; // ISO-8601
+}
+
+message Playlist {
+  string id = 1;
+
+  string title = 2;
+  string description = 3;
+
+  string owner_id = 4;
+  string owner_name = 5;
+
+  repeated string tags = 6;
+
+  int32 track_count = 7;
+  int32 popularity = 8;
+
+  string created_at = 9; // ISO-8601
+}
+
+// Wrapper that can carry any entity
+message Entity {
+  oneof payload {
+    Track track = 1;
+    Artist artist = 2;
+    Playlist playlist = 3;
+  }
+}
+
+// -------------------- UPSERT / BULK UPSERT --------------------
+
+message UpsertRequest {
+  Entity entity = 1;
+}
+
+message UpsertResponse {
+  bool ok = 1;
+  EntityType type = 2;
+  string id = 3;
+  string index = 4;
+  string message = 5; // optional: "created" / "updated" / error info
+}
+
+message BulkUpsertRequest {
+  repeated Entity entities = 1;
+}
+
+message BulkError {
+  int32 item_index = 1;   // index in request.entities
+  EntityType type = 2;
+  string id = 3;
+  string message = 4;
+}
+
+message BulkUpsertResponse {
+  int32 total = 1;
+  int32 success = 2;
+  int32 failed = 3;
+  repeated BulkError errors = 4;
 }

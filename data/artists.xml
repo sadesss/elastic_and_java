@@ -1,0 +1,121 @@
+<artists>
+    <artist>
+        <id>a1</id>
+        <name>Metallica</name>
+        <country>US</country>
+        <tags>
+            <tag>metal</tag>
+            <tag>rock</tag>
+        </tags>
+        <popularity>95</popularity>
+        <createdAt>1981-10-01T00:00:00Z</createdAt>
+    </artist>
+
+    <artist>
+        <id>a2</id>
+        <name>Queen</name>
+        <country>UK</country>
+        <tags>
+            <tag>rock</tag>
+            <tag>classic</tag>
+        </tags>
+        <popularity>98</popularity>
+        <createdAt>1970-01-01T00:00:00Z</createdAt>
+    </artist>
+
+    <artist>
+        <id>a3</id>
+        <name>Pink Floyd</name>
+        <country>UK</country>
+        <tags>
+            <tag>rock</tag>
+            <tag>psychedelic</tag>
+        </tags>
+        <popularity>97</popularity>
+        <createdAt>1965-01-01T00:00:00Z</createdAt>
+    </artist>
+
+    <artist>
+        <id>a4</id>
+        <name>Nirvana</name>
+        <country>US</country>
+        <tags>
+            <tag>grunge</tag>
+            <tag>rock</tag>
+        </tags>
+        <popularity>94</popularity>
+        <createdAt>1987-01-01T00:00:00Z</createdAt>
+    </artist>
+
+    <artist>
+        <id>a5</id>
+        <name>Radiohead</name>
+        <country>UK</country>
+        <tags>
+            <tag>alternative</tag>
+            <tag>rock</tag>
+        </tags>
+        <popularity>92</popularity>
+        <createdAt>1985-01-01T00:00:00Z</createdAt>
+    </artist>
+
+    <artist>
+        <id>a6</id>
+        <name>AC/DC</name>
+        <country>AU</country>
+        <tags>
+            <tag>rock</tag>
+            <tag>hard-rock</tag>
+        </tags>
+        <popularity>96</popularity>
+        <createdAt>1973-01-01T00:00:00Z</createdAt>
+    </artist>
+
+    <artist>
+        <id>a7</id>
+        <name>The Beatles</name>
+        <country>UK</country>
+        <tags>
+            <tag>rock</tag>
+            <tag>classic</tag>
+        </tags>
+        <popularity>99</popularity>
+        <createdAt>1960-01-01T00:00:00Z</createdAt>
+    </artist>
+
+    <artist>
+        <id>a8</id>
+        <name>Coldplay</name>
+        <country>UK</country>
+        <tags>
+            <tag>pop</tag>
+            <tag>rock</tag>
+        </tags>
+        <popularity>93</popularity>
+        <createdAt>1996-01-01T00:00:00Z</createdAt>
+    </artist>
+
+    <artist>
+        <id>a9</id>
+        <name>Eminem</name>
+        <country>US</country>
+        <tags>
+            <tag>hip-hop</tag>
+            <tag>rap</tag>
+        </tags>
+        <popularity>97</popularity>
+        <createdAt>1996-01-01T00:00:00Z</createdAt>
+    </artist>
+
+    <artist>
+        <id>a10</id>
+        <name>Daft Punk</name>
+        <country>FR</country>
+        <tags>
+            <tag>electronic</tag>
+            <tag>dance</tag>
+        </tags>
+        <popularity>91</popularity>
+        <createdAt>1993-01-01T00:00:00Z</createdAt>
+    </artist>
+</artists>
